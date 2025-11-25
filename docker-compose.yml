@@ -1,0 +1,53 @@
+services:
+  # Banco de Dados
+  db:
+    image: postgres:15-alpine
+    container_name: matemagica-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: matemagica
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # O arquivo init.sql roda automaticamente na primeira criação do banco
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # Backend (Puxado do Docker Hub)
+  backend:
+    image: pedromarineli/matemagica-backend:latest
+    container_name: matemagica-backend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_USER: admin
+      DB_HOST: db
+      DB_DATABASE: matemagica
+      DB_PASSWORD: password123
+      DB_PORT: 5432
+      PORT: 3000
+      JWT_SECRET: sua_chave_secreta_aqui
+      # Substitua pela sua chave real ou deixe assim para ler do seu ambiente local
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    volumes:
+      # Persiste os uploads de imagens (ex: fotos de alunos)
+      - matemagica_uploads:/app/matemagica/public/images
+
+  # Frontend (Puxado do Docker Hub)
+  frontend:
+    image: pedromarineli/matemagica-frontend:latest
+    container_name: matemagica-frontend
+    restart: always
+    ports:
+      - "8082:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  matemagica_uploads:
