@@ -1,4 +1,4 @@
-###Matemágica
+### Matemágica
 
 > **Transforme o ensino de matemática em uma aventura.**
 
