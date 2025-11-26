@@ -1,4 +1,4 @@
-Matemágica
+###Matemágica
 
 > **Transforme o ensino de matemática em uma aventura.**
 
@@ -61,13 +61,13 @@ O projeto utiliza uma arquitetura moderna baseada em microsserviços containeriz
     export GEMINI_API_KEY=sua_chave_api_aqui
     ```
 
-    > **Nota:** As credenciais da base de dados (`admin`/`password123`) já estão configuradas por defeito no `docker-compose` para ambiente de desenvolvimento.
+    > **Nota:** As credenciais da base de dados (`admin`/`password123`) já estão configuradas por padrao no `docker-compose` para ambiente de desenvolvimento.
 
 3.  **Inicie os serviços:**
     ```bash
     docker-compose up -d
     ```
-    Isto irá iniciar três contentores:
+    Isto irá iniciar três conteineres:
     * `matemagica-db`: Base de dados PostgreSQL (Porta **5432**)
     * `matemagica-backend`: Servidor Node.js (Porta **3000**)
     * `matemagica-frontend`: Aplicação Vue.js (Porta **8082**)
